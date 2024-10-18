@@ -36,23 +36,25 @@ export default class AuthController {
             }
 
             const token = jwt.sign(JWTPayload, process.env.JWT_SECRET!, {
-                expiresIn: "365d"
+                expiresIn: 60 * 60 * 2
             })
 
-            return res.json({
+            res.json({
                 status: 200,
                 message: "Logged in successfully",
                 user: {
                     ...findUser,
                     token: `Bearer ${token}`
                 }
-            })
+            });
+            return;
         } catch (e) {
             console.log("Failed to login, ", e)
-            return res.json({
+            res.json({
                 status: 500,
                 message: "Something went wrong, failed to log in, try again after some time.",
             })
+            return;
         }
     }
 }

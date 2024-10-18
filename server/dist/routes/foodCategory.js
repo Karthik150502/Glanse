@@ -4,7 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const authController_1 = __importDefault(require("../controllers/authController"));
+const AuthMiddleware_1 = __importDefault(require("../middlewares/AuthMiddleware"));
 const router = (0, express_1.Router)();
-router.post("/login", authController_1.default.login);
+const foodCategory_1 = __importDefault(require("../controllers/foodCategory"));
+router.post("/", AuthMiddleware_1.default, foodCategory_1.default.create);
+router.get("/restaurant/:id", foodCategory_1.default.getCategory_Restaurant);
 exports.default = router;

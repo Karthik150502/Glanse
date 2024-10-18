@@ -8,13 +8,19 @@ const express_1 = __importDefault(require("express"));
 require("dotenv/config");
 const cors_1 = __importDefault(require("cors"));
 const auth_1 = __importDefault(require("./routes/auth"));
+const dishes_1 = __importDefault(require("./routes/dishes"));
+const foodCategory_1 = __importDefault(require("./routes/foodCategory"));
+const restaurant_1 = __importDefault(require("./routes/restaurant"));
 exports.app = (0, express_1.default)();
 const PORT = process.env.PORT || 8080;
 // * Middlewares
 exports.app.use((0, cors_1.default)());
 exports.app.use(express_1.default.json());
 exports.app.use(express_1.default.urlencoded({ extended: false }));
-exports.app.use("/api", auth_1.default);
+exports.app.use("/api/auth", auth_1.default);
+exports.app.use("/api/dish", dishes_1.default);
+exports.app.use("/api/food-category", foodCategory_1.default);
+exports.app.use("/api/restaurant", restaurant_1.default);
 exports.app.get("/", (req, res) => {
     res.send("It's working 🙌");
 });

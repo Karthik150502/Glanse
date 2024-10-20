@@ -41,7 +41,7 @@ export default class FoodCategory {
 
         res.status(200).json({
             status: 200,
-            message: "Foor categories fetched.",
+            message: "Food categories fetched.",
             categories: categories,
             served_by: id
         })

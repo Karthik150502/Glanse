@@ -36,6 +36,28 @@ class DishController {
             return;
         });
     }
+    static edit(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let { name, description, price, isAvailable, food_category, id } = req.body;
+            let dish = yield db_config_1.default.dish.update({
+                data: {
+                    name,
+                    description,
+                    price,
+                    isAvailable,
+                    food_category
+                }, where: {
+                    id
+                }
+            });
+            res.status(200).json({
+                status: 200,
+                message: "The dish has edited successfully.",
+                dish: dish
+            });
+            return;
+        });
+    }
     static getSingleDish(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
         });

@@ -5,7 +5,8 @@ import { Request, Response, NextFunction } from "express";
 
 const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
-    if (authHeader === null || authHeader === undefined) {
+    console.log("req.headers.authorization = ", req.headers.authorization);
+    if (!authHeader) {
         res.status(401).json({
             status: 401,
             message: "Unauthorized"

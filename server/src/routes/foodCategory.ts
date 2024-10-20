@@ -1,13 +1,13 @@
 import { Router } from "express";
 import AuthMiddleware from "../middlewares/AuthMiddleware";
 const router = Router();
-import FoodCategory from "../controllers/foodCategory";
+import FoodCategory from "../controllers/foodCategoryController";
 
 
 
 
 router.post("/", AuthMiddleware, FoodCategory.create)
-router.get("/restaurant/:id", FoodCategory.getCategory_Restaurant)
+router.get("/restaurant/:id", AuthMiddleware, FoodCategory.getCategory_Restaurant)
 
 
 

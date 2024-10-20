@@ -3,11 +3,11 @@ import prisma from "../config/db.config";
 
 
 
- 
+
 
 export default class DishController {
 
- 
+
     static async create(req: Request, res: Response) {
 
         let { name, description, price, isAvailable, created_by, served_by, food_category } = req.body;
@@ -29,6 +29,31 @@ export default class DishController {
         res.status(200).json({
             status: 200,
             message: "The dish has been created.",
+            dish: dish
+        });
+        return;
+    }
+    static async edit(req: Request, res: Response) {
+
+        let { name, description, price, isAvailable, food_category, id } = req.body;
+
+        
+        let dish = await prisma.dish.update({
+            data: {
+                name,
+                description,
+                price,
+                isAvailable,
+                food_category
+            }, where: {
+                id
+            }
+        })
+
+
+        res.status(200).json({
+            status: 200,
+            message: "The dish has edited successfully.",
             dish: dish
         });
         return;

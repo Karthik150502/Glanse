@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const AuthMiddleware = (req, res, next) => {
     const authHeader = req.headers.authorization;
-    if (authHeader === null || authHeader === undefined) {
+    console.log("req.headers.authorization = ", req.headers.authorization);
+    if (!authHeader) {
         res.status(401).json({
             status: 401,
             message: "Unauthorized"

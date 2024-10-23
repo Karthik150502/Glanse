@@ -35,7 +35,7 @@ class AuthController {
                     id: findUser.id
                 };
                 const token = jsonwebtoken_1.default.sign(JWTPayload, process.env.JWT_SECRET, {
-                    expiresIn: 60 * 60 * 2
+                    expiresIn: "365d"
                 });
                 res.json({
                     status: 200,

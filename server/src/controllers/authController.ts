@@ -36,7 +36,7 @@ export default class AuthController {
             }
 
             const token = jwt.sign(JWTPayload, process.env.JWT_SECRET!, {
-                expiresIn: 60 * 60 * 2
+                expiresIn: "365d"
             })
 
             res.json({

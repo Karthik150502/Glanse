@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../config/db.config";
+import { S3Handler } from "../packages/aws/s3-main";
 
 
 
@@ -10,7 +11,7 @@ export default class DishController {
 
     static async create(req: Request, res: Response) {
 
-        let { name, description, price, isAvailable, created_by, served_by, food_category } = req.body;
+        let { name, description, price, isAvailable, created_by, served_by, food_category, image } = req.body;
 
 
         let dish = await prisma.dish.create({
@@ -21,7 +22,8 @@ export default class DishController {
                 isAvailable,
                 created_by,
                 served_by,
-                food_category
+                food_category,
+                image
             }
         })
 
@@ -33,11 +35,41 @@ export default class DishController {
         });
         return;
     }
+
+
+
+
+    static async delete(req: Request, res: Response) {
+
+        let { id } = req.query;
+
+
+        let dish = await prisma.dish.delete({
+            where: { id: Number(id) }
+        })
+
+        let imageDeleted: boolean | void = false;
+        if (dish.image) {
+            let s3 = S3Handler.getInstance();
+            imageDeleted = await s3.deletObject(dish.image);
+        }
+
+
+        res.status(200).json({
+            status: 200,
+            message: "The dish has been deleted.",
+            isImageDeleted: imageDeleted,
+            dish: dish
+        });
+        return;
+    }
+
+
     static async edit(req: Request, res: Response) {
 
         let { name, description, price, isAvailable, food_category, id } = req.body;
 
-        
+
         let dish = await prisma.dish.update({
             data: {
                 name,
@@ -73,6 +105,9 @@ export default class DishController {
         let dishes = await prisma.dish.findMany({
             where: {
                 served_by: Number(restaurant_id)
+            },
+            orderBy: {
+                updated_at: "desc"
             }
         })
 

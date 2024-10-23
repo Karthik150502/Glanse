@@ -15,7 +15,6 @@ const AuthMiddleware = (req, res, next) => {
         return;
     }
     const token = authHeader.split(" ")[1];
-    // Verifying the JWT
     jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) {
             res.status(401).json({

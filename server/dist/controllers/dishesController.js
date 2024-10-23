@@ -13,10 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const db_config_1 = __importDefault(require("../config/db.config"));
+const s3_main_1 = require("../packages/aws/s3-main");
 class DishController {
     static create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            let { name, description, price, isAvailable, created_by, served_by, food_category } = req.body;
+            let { name, description, price, isAvailable, created_by, served_by, food_category, image } = req.body;
             let dish = yield db_config_1.default.dish.create({
                 data: {
                     name,
@@ -25,12 +26,33 @@ class DishController {
                     isAvailable,
                     created_by,
                     served_by,
-                    food_category
+                    food_category,
+                    image
                 }
             });
             res.status(200).json({
                 status: 200,
                 message: "The dish has been created.",
+                dish: dish
+            });
+            return;
+        });
+    }
+    static delete(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let { id } = req.query;
+            let dish = yield db_config_1.default.dish.delete({
+                where: { id: Number(id) }
+            });
+            let imageDeleted = false;
+            if (dish.image) {
+                let s3 = s3_main_1.S3Handler.getInstance();
+                imageDeleted = yield s3.deletObject(dish.image);
+            }
+            res.status(200).json({
+                status: 200,
+                message: "The dish has been deleted.",
+                isImageDeleted: imageDeleted,
                 dish: dish
             });
             return;
@@ -72,6 +94,9 @@ class DishController {
             let dishes = yield db_config_1.default.dish.findMany({
                 where: {
                     served_by: Number(restaurant_id)
+                },
+                orderBy: {
+                    updated_at: "desc"
                 }
             });
             res.status(200).json({

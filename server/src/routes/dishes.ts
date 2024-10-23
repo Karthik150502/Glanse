@@ -7,7 +7,8 @@ import DishController from "../controllers/dishesController";
 
 
 router.post("/", AuthMiddleware, DishController.create);
-router.put("/", DishController.edit);
+router.put("/", AuthMiddleware, DishController.edit);
+router.delete("/", AuthMiddleware, DishController.delete);
 
 router.get("/", AuthMiddleware, DishController.getAllDish)
 

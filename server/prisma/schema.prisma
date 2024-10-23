@@ -14,13 +14,15 @@ datasource db {
 }
 
 model User {
-  id              Int               @id @default(autoincrement())
-  name            String            @db.VarChar(191)
-  email           String            @unique @db.VarChar(191)
-  provider        String            @db.VarChar(100)
-  image           String?
-  oauth_id        String
-  created_at      DateTime          @default(now())
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(191)
+  email      String   @unique @db.VarChar(191)
+  provider   String   @db.VarChar(100)
+  image      String?
+  oauth_id   String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
   Category        Category[]
   Reataurent      Restaurant[]
   Dish            Dish[]
@@ -40,7 +42,9 @@ model Category {
   servedby    Restaurant @relation(fields: [served_by], references: [id], onDelete: Cascade)
   served_by   Int
   created_at  DateTime   @default(now())
-  Dish        Dish[]
+  updated_at  DateTime   @default(now()) @updatedAt
+
+  Dish Dish[]
 
   @@index([created_at])
   @@map("food_category")
@@ -52,10 +56,12 @@ model Restaurant {
   description String  @db.VarChar(200)
   image       String? @db.VarChar(191)
 
-  user       User         @relation(fields: [owned_by], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [owned_by], references: [id], onDelete: Cascade)
   owned_by   Int
-  location   String       @db.VarChar(200)
-  created_at DateTime     @default(now())
+  location   String   @db.VarChar(200)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
   Dish       Dish[]
   Dish_Combo Dish_Combo[]
   Category   Category[]
@@ -80,7 +86,9 @@ model Dish {
   category      Category @relation(fields: [food_category], references: [id], onDelete: Cascade)
   food_category Int
 
-  created_at      DateTime          @default(now())
+  created_at DateTime @default(now())
+
+  updated_at      DateTime          @default(now()) @updatedAt
   DishOnDishCombo DishOnDishCombo[]
 
   @@index([created_at])
@@ -101,7 +109,9 @@ model Dish_Combo {
   servedby  Restaurant @relation(fields: [served_by], references: [id], onDelete: Cascade)
   served_by Int
 
-  created_at      DateTime          @default(now())
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
   DishOnDishCombo DishOnDishCombo[]
 
   @@index([created_at])
@@ -118,6 +128,7 @@ model DishOnDishCombo {
   created_by  Int
 
   created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
 
   @@index([created_at])
   @@map("dish_on_dish_combo")

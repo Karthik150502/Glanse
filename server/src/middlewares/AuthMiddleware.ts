@@ -15,7 +15,6 @@ const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
     }
 
     const token = authHeader.split(" ")[1];
-    // Verifying the JWT
     jwt.verify(token, process.env.JWT_SECRET!, (err, user) => {
         if (err) {
             res.status(401).json({

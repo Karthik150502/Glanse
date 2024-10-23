@@ -7,7 +7,7 @@
     "watch": "tsc -w",
     "server": "nodemon dist/index.js",
     "dev": "concurrently \"npm run watch\" \"npm run server\"",
-    "prisma:migrate":"npx prisma migrate dev"
+    "prisma:migrate": "npx prisma migrate dev"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.20.0",
+    "aws-sdk": "^2.1691.0",
     "concurrently": "^9.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

@@ -17,7 +17,7 @@ const s3_main_1 = require("../packages/aws/s3-main");
 class DishController {
     static create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            let { name, description, price, isAvailable, created_by, served_by, food_category, image } = req.body;
+            let { name, description, price, isAvailable, created_by, served_by, food_category, image, imageKey } = req.body;
             let dish = yield db_config_1.default.dish.create({
                 data: {
                     name,
@@ -27,7 +27,8 @@ class DishController {
                     created_by,
                     served_by,
                     food_category,
-                    image
+                    image,
+                    imageKey
                 }
             });
             res.status(200).json({
@@ -45,9 +46,9 @@ class DishController {
                 where: { id: Number(id) }
             });
             let imageDeleted = false;
-            if (dish.image) {
+            if (dish.imageKey) {
                 let s3 = s3_main_1.S3Handler.getInstance();
-                imageDeleted = yield s3.deletObject(dish.image);
+                imageDeleted = yield s3.deletObject(dish.imageKey);
             }
             res.status(200).json({
                 status: 200,

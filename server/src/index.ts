@@ -5,14 +5,13 @@ import AuthRoutes from "./routes/auth"
 import DishesRoutes from "./routes/dishes"
 import FoodCategoryRoutes from "./routes/foodCategory"
 import RestaurantRoutes from "./routes/restaurant"
-                    
+                          
 export const app: Application = express();
-const PORT = process.env.PORT || 8080;
-                   
+const PORT = process.env.PORT || 8080;    
 // * Middlewares
 app.use(cors({
     origin: "*",
-}));
+}));       
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

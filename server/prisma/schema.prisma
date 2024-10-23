@@ -19,6 +19,7 @@ model User {
   email      String   @unique @db.VarChar(191)
   provider   String   @db.VarChar(100)
   image      String?
+  imageKey   String?
   oauth_id   String
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
@@ -33,9 +34,11 @@ model User {
 }
 
 model Category {
-  id          Int        @id @default(autoincrement())
-  name        String     @db.VarChar(191)
-  image       String?
+  id       Int     @id @default(autoincrement())
+  name     String  @db.VarChar(191)
+  image    String?
+  imageKey String?
+
   user        User       @relation(fields: [created_by], references: [id], onDelete: Cascade)
   created_by  Int
   description String     @db.VarChar(200)
@@ -54,7 +57,8 @@ model Restaurant {
   id          Int     @id @default(autoincrement())
   name        String  @db.VarChar(191)
   description String  @db.VarChar(200)
-  image       String? @db.VarChar(191)
+  image       String?
+  imageKey    String?
 
   user       User     @relation(fields: [owned_by], references: [id], onDelete: Cascade)
   owned_by   Int
@@ -75,6 +79,8 @@ model Dish {
   name        String  @db.VarChar(191)
   description String  @db.VarChar(200)
   image       String?
+  imageKey    String?
+
   price       Int     @db.Integer()
   isAvailable Boolean @db.Boolean()
   user        User    @relation(fields: [created_by], references: [id], onDelete: Cascade)
@@ -100,6 +106,7 @@ model Dish_Combo {
   name        String  @db.VarChar(191)
   description String  @db.VarChar(200)
   image       String?
+  imageKey    String?
 
   price       Int     @db.Integer()
   isAvailable Boolean @db.Boolean()

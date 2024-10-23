@@ -11,7 +11,7 @@ export default class DishController {
 
     static async create(req: Request, res: Response) {
 
-        let { name, description, price, isAvailable, created_by, served_by, food_category, image } = req.body;
+        let { name, description, price, isAvailable, created_by, served_by, food_category, image, imageKey } = req.body;
 
 
         let dish = await prisma.dish.create({
@@ -23,7 +23,8 @@ export default class DishController {
                 created_by,
                 served_by,
                 food_category,
-                image
+                image,
+                imageKey
             }
         })
 
@@ -49,9 +50,9 @@ export default class DishController {
         })
 
         let imageDeleted: boolean | void = false;
-        if (dish.image) {
+        if (dish.imageKey) {
             let s3 = S3Handler.getInstance();
-            imageDeleted = await s3.deletObject(dish.image);
+            imageDeleted = await s3.deletObject(dish.imageKey);
         }
 
 

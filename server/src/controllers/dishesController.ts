@@ -68,7 +68,7 @@ export default class DishController {
 
     static async edit(req: Request, res: Response) {
 
-        let { name, description, price, isAvailable, food_category, id } = req.body;
+        let { name, description, price, isAvailable, food_category, image, imageKey, id } = req.body;
 
 
         let dish = await prisma.dish.update({
@@ -77,7 +77,9 @@ export default class DishController {
                 description,
                 price,
                 isAvailable,
-                food_category
+                food_category,
+                image,
+                imageKey,
             }, where: {
                 id
             }

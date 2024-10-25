@@ -61,14 +61,16 @@ class DishController {
     }
     static edit(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            let { name, description, price, isAvailable, food_category, id } = req.body;
+            let { name, description, price, isAvailable, food_category, image, imageKey, id } = req.body;
             let dish = yield db_config_1.default.dish.update({
                 data: {
                     name,
                     description,
                     price,
                     isAvailable,
-                    food_category
+                    food_category,
+                    image,
+                    imageKey,
                 }, where: {
                     id
                 }

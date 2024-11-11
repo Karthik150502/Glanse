@@ -111,6 +111,29 @@ class DishController {
             return;
         });
     }
+    static getDish_RestaurantCat(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let { restaurantId, category } = req.body;
+            console.log({ restaurantId, category });
+            let dishes = yield db_config_1.default.dish.findMany({
+                where: {
+                    served_by: Number(restaurantId),
+                    food_category: category
+                },
+                orderBy: {
+                    updated_at: "desc"
+                }
+            });
+            res.status(200).json({
+                status: 200,
+                message: "Fetched all the dishes for the Restaurant Category",
+                restaurant: restaurantId,
+                category: category,
+                dishes: dishes
+            });
+            return;
+        });
+    }
     static getAllDish_Restaurant(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
         });

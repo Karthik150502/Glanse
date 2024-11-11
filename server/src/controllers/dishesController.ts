@@ -122,6 +122,37 @@ export default class DishController {
         });
         return;
     }
+
+
+    static async getDish_RestaurantCat(req: Request, res: Response) {
+        let { restaurantId, category } = req.body;
+        console.log({ restaurantId, category })
+        let dishes = await prisma.dish.findMany({
+            where: {
+                served_by: Number(restaurantId),
+                food_category: category
+            },
+            orderBy: {
+                updated_at: "desc"
+            }
+        })
+
+        res.status(200).json({
+            status: 200,
+            message: "Fetched all the dishes for the Restaurant Category",
+            restaurant: restaurantId,
+            category: category,
+            dishes: dishes
+        });
+        return;
+    }
+
+
+
+
+
+
+
     static async getAllDish_Restaurant(req: Request, res: Response) {
 
     }

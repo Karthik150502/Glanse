@@ -10,9 +10,9 @@ const dishesController_1 = __importDefault(require("../controllers/dishesControl
 router.post("/", AuthMiddleware_1.default, dishesController_1.default.create);
 router.put("/", AuthMiddleware_1.default, dishesController_1.default.edit);
 router.delete("/", AuthMiddleware_1.default, dishesController_1.default.delete);
-router.get("/", AuthMiddleware_1.default, dishesController_1.default.getAllDish);
-router.get("/:id", AuthMiddleware_1.default, dishesController_1.default.getSingleDish);
-router.get("/restaurant/:restaurant_id", dishesController_1.default.getDish_Restaurant);
+router.get("/", dishesController_1.default.getAllDish);
+router.get("/:id", dishesController_1.default.getSingleDish);
+router.post("/restaurant-cat", dishesController_1.default.getDish_RestaurantCat);
 router.get("/combo/:id", dishesController_1.default.getDish_Combo);
 router.get("/category/:id", dishesController_1.default.getDish_Category);
 router.get("/restaurant", dishesController_1.default.getAllDish_Restaurant);

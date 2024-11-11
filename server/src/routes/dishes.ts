@@ -10,11 +10,11 @@ router.post("/", AuthMiddleware, DishController.create);
 router.put("/", AuthMiddleware, DishController.edit);
 router.delete("/", AuthMiddleware, DishController.delete);
 
-router.get("/", AuthMiddleware, DishController.getAllDish)
+router.get("/", DishController.getAllDish)
 
-router.get("/:id", AuthMiddleware, DishController.getSingleDish)
+router.get("/:id", DishController.getSingleDish)
 
-router.get("/restaurant/:restaurant_id", DishController.getDish_Restaurant)
+router.post("/restaurant-cat", DishController.getDish_RestaurantCat)
 router.get("/combo/:id", DishController.getDish_Combo)
 router.get("/category/:id", DishController.getDish_Category)
 router.get("/restaurant", DishController.getAllDish_Restaurant)
